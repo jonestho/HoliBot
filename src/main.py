@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands, tasks
 from googlesearch import search
-from objects import *
+from HoliBot import *
+from HolidaySet import *
 import numpy as np
 import pycountry_convert
 
@@ -10,6 +11,17 @@ clientData = HoliBot()
 
 dateTime = datetime.datetime.now()
 currentHour = dateTime.hour
+
+
+def verifyCountry(countryCode):
+    response = requests.get(PUB_HOL + "/AvailableCountries")
+    countries = response.json()
+
+    for country in countries:
+        if country["countryCode"] == countryCode:
+            return True
+
+    return False
 
 
 @client.event
